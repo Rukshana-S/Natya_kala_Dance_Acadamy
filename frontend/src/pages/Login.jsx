@@ -47,7 +47,7 @@ const Login = () => {
       alignItems: 'center',
       justifyContent: 'center'
     }}>
-      <div style={{ maxWidth: '400px', background: 'rgba(245,230,211,0.98)', padding: '3rem', borderRadius: '15px', textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.45)' }}>
+      <div className="animate-scale-in" style={{ maxWidth: '400px', background: 'rgba(245,230,211,0.98)', padding: '3rem', borderRadius: '15px', textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.45)' }}>
         <h1 style={{ color: 'var(--deep-maroon)', marginBottom: '2rem' }}>Login</h1>
 
         {error && (

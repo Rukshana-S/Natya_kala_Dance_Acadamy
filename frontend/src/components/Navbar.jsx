@@ -43,35 +43,19 @@ const Navbar = () => {
             <img
               src="/logo.png"
               alt="Natya Kala Dance Academy"
-              style={{ height: '40px', marginRight: '0.5rem' }}
+              className="logo-img"
             />
             Natya Kala Dance Academy
           </Link>
 
-          <button className="hamburger" onClick={toggleMenu}>
+          <button className={`hamburger ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
             <span className="hamburger-line"></span>
             <span className="hamburger-line"></span>
             <span className="hamburger-line"></span>
           </button>
 
           <ul className={`nav-menu ${isMenuOpen ? 'open' : ''}`}>
-            <li>
-              <Link
-                to="/"
-                className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
-              >
-                Home
-              </Link>
-            </li>
 
-            <li>
-              <Link
-                to="/about"
-                className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
-              >
-                About
-              </Link>
-            </li>
 
             {userRole === 'admin' ? (
               <>
@@ -115,14 +99,64 @@ const Navbar = () => {
                     Messages
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to="/admin/gallery"
+                    className={`nav-link ${location.pathname === '/admin/gallery' ? 'active' : ''
+                      }`}
+                    onClick={closeMenu}
+                  >
+                    Gallery Manager
+                  </Link>
+                </li>
               </>
             ) : (
               <>
                 <li>
                   <Link
+                    to="/"
+                    className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Home
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/about"
+                    className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    About
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/gurus"
+                    className={`nav-link ${location.pathname === '/gurus' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Guru
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    to="/gallery"
+                    className={`nav-link ${location.pathname === '/gallery' ? 'active' : ''}`}
+                    onClick={closeMenu}
+                  >
+                    Gallery
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to="/contact"
                     className={`nav-link ${location.pathname === '/contact' ? 'active' : ''
                       }`}
+                    onClick={closeMenu}
                   >
                     Contact
                   </Link>
@@ -133,6 +167,7 @@ const Navbar = () => {
                     to="/schedules"
                     className={`nav-link ${location.pathname === '/schedules' ? 'active' : ''
                       }`}
+                    onClick={closeMenu}
                   >
                     Class Schedules
                   </Link>
@@ -143,8 +178,9 @@ const Navbar = () => {
                     to="/register"
                     className={`nav-link ${location.pathname === '/register' ? 'active' : ''
                       }`}
+                    onClick={closeMenu}
                   >
-                    Register for Class
+                    Register
                   </Link>
                 </li>
               </>
@@ -152,7 +188,7 @@ const Navbar = () => {
 
             {!isLoggedIn ? (
               <li>
-                <Link to="/login" className="btn-logout">
+                <Link to="/login" className="btn-logout" onClick={closeMenu}>
                   Login
                 </Link>
               </li>

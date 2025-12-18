@@ -6,7 +6,7 @@ const About = () => {
   );
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Hero Banner */}
       <section className="page-hero mandala-bg" style={{
         minHeight: "100vh",

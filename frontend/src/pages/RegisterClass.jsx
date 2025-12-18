@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const RegisterClass = () => {
@@ -15,8 +15,23 @@ const RegisterClass = () => {
     paymentMode: ''
   });
   const [assignedTimetable, setAssignedTimetable] = useState(null);
+  const [timetablesData, setTimetablesData] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
+
+  // Fetch timetables on mount
+  useEffect(() => {
+    const fetchTimetables = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/registrations/timetables/all');
+        setTimetablesData(response.data);
+      } catch (error) {
+        console.error('Error fetching timetables:', error);
+      }
+    };
+
+    fetchTimetables();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -103,8 +118,52 @@ const RegisterClass = () => {
     }
   };
 
+  const getCapacityStatus = (batch, levelRaw) => {
+    if (!timetablesData || !batch || !levelRaw) return null;
+
+    const levelMap = {
+      'complete-beginner': 'beginner',
+      'some-experience': 'beginner',
+      'intermediate': 'intermediate',
+      'advanced': 'advanced'
+    };
+
+    const level = levelMap[levelRaw];
+    const category = timetablesData[batch.toLowerCase()];
+
+    if (!category || !category.timetables) return null;
+
+    // Find the timetable that matches the level
+    // Based on backend logic: 
+    // beginner -> matches Beginner (Foundation)
+    // intermediate -> matches Intermediate (Varnams)
+    // advanced -> matches Advanced (Arangetram)
+
+    const timetable = category.timetables.find(t => {
+      // Logic from danceData.js / timetables.js matching 
+      // Usually names contain the level or level field matches
+      // Let's rely on the 'level' field if present or name
+      return (t.level && t.level.toLowerCase() === level) ||
+        (t.name && t.name.toLowerCase().includes(level));
+    });
+
+    if (!timetable) return null;
+
+    const { enrolledCount = 0, capacity = 999 } = timetable;
+    const isFull = enrolledCount >= capacity;
+
+    return {
+      enrolledCount,
+      capacity,
+      isFull,
+      label: isFull
+        ? ` (FULL)`
+        : ``
+    };
+  };
+
   return (
-    <div>
+    <div className="animate-fade-in">
       <section className="page-hero mandala-bg">
         <div className="container">
           <h1>Register for Class</h1>
@@ -114,7 +173,7 @@ const RegisterClass = () => {
 
       <section className="section mandala-bg">
         <div className="container">
-          <div className="enhanced-form-container">
+          <div className="enhanced-form-container animate-slide-up">
             <div className="form-header">
               <div className="form-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -251,11 +310,27 @@ const RegisterClass = () => {
                         value={formData.experienceLevel}
                         onChange={handleChange}
                         required
+                        disabled={!formData.preferredBatch}
                       >
                         <option value="">Select your experience</option>
-                        <option value="complete-beginner"> Complete Beginner</option>
-                        <option value="intermediate"> Intermediate</option>
-                        <option value="advanced"> Advanced</option>
+
+                        {[
+                          { val: 'complete-beginner', label: 'Complete Beginner' },
+                          { val: 'intermediate', label: 'Intermediate' },
+                          { val: 'advanced', label: 'Advanced' }
+                        ].map(opt => {
+                          const status = getCapacityStatus(formData.preferredBatch, opt.val);
+                          return (
+                            <option
+                              key={opt.val}
+                              value={opt.val}
+                              disabled={status?.isFull}
+                              style={status?.isFull ? { color: '#999', fontStyle: 'italic' } : {}}
+                            >
+                              {opt.label} {status ? status.label : ''}
+                            </option>
+                          );
+                        })}
                       </select>
                     </div>
                   </div>

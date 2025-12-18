@@ -7,7 +7,37 @@ const registrationController = {
   getTimetables: async (req, res) => {
     try {
       const allTimetables = getAllTimetables();
-      res.json(allTimetables);
+
+      // Enhance static timetables with live DB data (capacity/enrolledCount)
+      const enhancedTimetables = {};
+
+      for (const [key, category] of Object.entries(allTimetables)) {
+        if (!category.timetables) {
+          enhancedTimetables[key] = category;
+          continue;
+        }
+
+        const enhancedList = await Promise.all(category.timetables.map(async (timetable) => {
+          // Find matching schedule in DB
+          let schedule = await Schedule.findOne({ timetableId: timetable.id });
+
+          // If not found (first time), we use default capacity
+          // If found, we use live data
+          return {
+            ...timetable,
+            enrolledCount: schedule ? schedule.enrolledCount : 0,
+            capacity: schedule ? schedule.capacity : 999, // Default large capacity if not set
+            isFull: schedule ? (schedule.enrolledCount >= schedule.capacity) : false
+          };
+        }));
+
+        enhancedTimetables[key] = {
+          ...category,
+          timetables: enhancedList
+        };
+      }
+
+      res.json(enhancedTimetables);
     } catch (error) {
       console.error('Get timetables error:', error);
       res.status(500).json({ message: 'Server error fetching timetables' });
@@ -90,15 +120,24 @@ const registrationController = {
           level: t.level || 'Imported',
           days: t.days || [],
           startTime: t.startTime || (t.slots && t.slots[0] ? t.slots[0].time.split('–')[0].trim() : ''),
-          endTime: t.endTime || (t.slots && t.slots[t.slots.length-1] ? t.slots[t.slots.length-1].time.split('–')[1].trim() : ''),
+          endTime: t.endTime || (t.slots && t.slots[t.slots.length - 1] ? t.slots[t.slots.length - 1].time.split('–')[1].trim() : ''),
           timetable: (t.slots || []).map(s => ({ day: (t.days && t.days.length) ? t.days[0] : 'Unknown', time: s.time, startTime: s.time.split('–')[0].trim(), endTime: s.time.split('–')[1] ? s.time.split('–')[1].trim() : '', activity: s.activity })),
           description: `Auto-imported timetable (${t.name || t.id})`,
           feeAmount: 0,
-          capacity: 999,
+          capacity: 999, // Default capacity
           enrolledCount: 0,
           isActive: true
         });
         scheduleDoc = await newSchedule.save();
+      }
+
+      // CAPACITY CHECK
+      if (scheduleDoc) {
+        if (scheduleDoc.enrolledCount >= scheduleDoc.capacity) {
+          return res.status(400).json({
+            message: 'This batch is currently full. Please select another batch or contact the academy.'
+          });
+        }
       }
 
       // Create new registration data
@@ -114,14 +153,14 @@ const registrationController = {
       };
 
       // Only include batch and experience level if not mentally challenged
-        if (!isMentallyChallenged) {
-          registrationData.preferredBatch = preferredBatch;
-          registrationData.experienceLevel = experienceLevel;
-        }
+      if (!isMentallyChallenged) {
+        registrationData.preferredBatch = preferredBatch;
+        registrationData.experienceLevel = experienceLevel;
+      }
 
-        if (scheduleDoc) {
-          registrationData.scheduleId = scheduleDoc._id;
-        }
+      if (scheduleDoc) {
+        registrationData.scheduleId = scheduleDoc._id;
+      }
 
       const registration = new Registration(registrationData);
 

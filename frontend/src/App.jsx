@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
+import Guru from './pages/Guru';
 import Contact from './pages/Contact';
 import RegisterClass from './pages/RegisterClass';
 import Login from './pages/Login';
@@ -12,7 +13,9 @@ import AdminDashboard from './pages/AdminDashboard';
 import AdminStatistics from './pages/AdminStatistics';
 import AdminRevenue from './pages/AdminRevenue';
 import AdminMessages from './pages/AdminMessages';
+import AdminGallery from './pages/AdminGallery';
 import Schedule from './pages/Schedule';
+import Gallery from './pages/Gallery';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ForgotPassword from './pages/ForgotPassword';
@@ -38,9 +41,11 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/gurus" element={<Guru />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<RegisterClass />} />
                 <Route path="/schedules" element={<Schedule />} />
+                <Route path="/gallery" element={<Gallery />} />
                 <Route path="/admin/dashboard" element={
                   <ProtectedRoute adminOnly>
                     <AdminDashboard />
@@ -59,6 +64,11 @@ function App() {
                 <Route path="/admin/messages" element={
                   <ProtectedRoute adminOnly>
                     <AdminMessages />
+                  </ProtectedRoute>
+                } />
+                <Route path="/admin/gallery" element={
+                  <ProtectedRoute adminOnly>
+                    <AdminGallery />
                   </ProtectedRoute>
                 } />
               </Routes>

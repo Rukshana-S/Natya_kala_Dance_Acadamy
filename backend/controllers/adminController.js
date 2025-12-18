@@ -38,18 +38,20 @@ const adminController = {
         return res.status(400).json({ message: 'Registration is already approved' });
       }
 
-      // Check capacity before approving
+      // ATOMIC CAPACITY CHECK & INCREMENT
       if (registration.scheduleId && mongoose.Types.ObjectId.isValid(registration.scheduleId)) {
-        const schedule = await Schedule.findById(registration.scheduleId);
-        if (schedule) {
-          if (schedule.enrolledCount >= schedule.capacity) {
-            return res.status(400).json({ message: 'Cannot approve: Class is full' });
-          }
-          // Use updateOne to increment count without triggering full validation (e.g. missing instructor)
-          await Schedule.updateOne(
-            { _id: schedule._id },
-            { $inc: { enrolledCount: 1 } }
-          );
+        // Use updateOne with a conditioned query for atomic safety
+        const result = await Schedule.updateOne(
+          {
+            _id: registration.scheduleId,
+            $expr: { $lt: ["$enrolledCount", "$capacity"] }
+          },
+          { $inc: { enrolledCount: 1 } }
+        );
+
+        // If no document was modified, it means either schedule not found OR it's full
+        if (result.matchedCount > 0 && result.modifiedCount === 0) {
+          return res.status(400).json({ message: 'Cannot approve: Class is full (Capacity Limit Reached)' });
         }
       }
 
@@ -106,6 +108,14 @@ const adminController = {
         rejectedBy: (req.user && req.user._id && req.user._id !== 'admin') ? req.user._id : null,
         rejectionReason: reason
       };
+
+      // DECREMENT CAPACITY IF APPROVED PREVIOUSLY
+      if (registration.status === 'approved' && registration.scheduleId) {
+        await Schedule.updateOne(
+          { _id: registration.scheduleId },
+          { $inc: { enrolledCount: -1 } }
+        );
+      }
 
       await Registration.updateOne(
         { _id: registration._id },

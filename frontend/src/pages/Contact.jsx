@@ -67,7 +67,7 @@ const Contact = () => {
   };
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Page Hero */}
       <section className="page-hero">
         <div className="container">

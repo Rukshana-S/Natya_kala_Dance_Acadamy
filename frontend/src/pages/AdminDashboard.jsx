@@ -4,25 +4,37 @@ import '../styles/admin.css';
 
 const AdminDashboard = () => {
   const [registrations, setRegistrations] = useState([]);
+  const [timetables, setTimetables] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchRegistrations();
+    fetchData();
   }, []);
 
-  const fetchRegistrations = async () => {
+  const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/admin/registrations', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setRegistrations(response.data);
-    } catch {
-      setError('Failed to fetch registrations');
+      const [regsRes, timeRes] = await Promise.all([
+        axios.get('http://localhost:5000/api/admin/registrations', {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        axios.get('http://localhost:5000/api/registrations/timetables/all')
+      ]);
+
+      setRegistrations(regsRes.data);
+      setTimetables(timeRes.data);
+    } catch (err) {
+      console.error('Fetch error:', err);
+      setError('Failed to fetch dashboard data');
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchRegistrations = async () => {
+    // Re-fetch both to ensure counts are synced after actions
+    fetchData();
   };
 
   const handleApprove = async (registrationId) => {
@@ -119,7 +131,7 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div>
+    <div className="animate-fade-in">
       {/* Dashboard Header */}
       <section className="page-hero">
         <div className="container">

@@ -8,7 +8,8 @@ const HeroSection = () => {
   return (
     <section className="hero-section-custom" style={{
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, rgba(139, 35, 69, 0.65), rgba(101, 26, 52, 0.65)), url("/home1.jpg")',
+      backgroundColor: '#8B1538', // Fallback color
+      backgroundImage: 'linear-gradient(135deg, rgba(139, 35, 69, 0.65), rgba(101, 26, 52, 0.65)), url("/home1.jpg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundAttachment: 'fixed',
@@ -64,29 +65,29 @@ const HeroSection = () => {
           }}>
             {!hideRegister && (
               <Link to="/register" className="hero-btn-primary" style={{
-              background: '#d4a574',
-              color: '#8b2345',
-              padding: '1rem 2.5rem',
-              borderRadius: '50px',
-              textDecoration: 'none',
-              fontSize: '1.1rem',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              border: 'none',
-              cursor: 'pointer',
-              boxShadow: '0 8px 15px rgba(0, 0, 0, 0.3)'
-            }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#c9985d';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.4)';
+                background: '#d4a574',
+                color: '#8b2345',
+                padding: '1rem 2.5rem',
+                borderRadius: '50px',
+                textDecoration: 'none',
+                fontSize: '1.1rem',
+                fontWeight: '600',
+                transition: 'all 0.3s ease',
+                border: 'none',
+                cursor: 'pointer',
+                boxShadow: '0 8px 15px rgba(0, 0, 0, 0.3)'
               }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#d4a574';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.3)';
-              }}>
-              Register for Class →
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#c9985d';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#d4a574';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.3)';
+                }}>
+                Register for Class →
               </Link>
             )}
             <Link to="/about" className="hero-btn-secondary" style={{

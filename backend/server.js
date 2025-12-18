@@ -9,6 +9,7 @@ const registrationRoutes = require('./routes/registrationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const scheduleRoutes = require('./routes/scheduleRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const galleryRoutes = require('./routes/galleryRoutes');
 
 // Load environment variables
 dotenv.config();
@@ -17,6 +18,10 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const path = require('path');
+
+// Serve uploaded files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Middleware
 app.use(cors({
@@ -41,6 +46,7 @@ app.use('/api/registrations', registrationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/schedules', scheduleRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/gallery', galleryRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
