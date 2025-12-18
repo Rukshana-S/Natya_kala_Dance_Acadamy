@@ -34,21 +34,50 @@ const AdminDashboard = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
-      // Update local state
-      setRegistrations(registrations.map(reg =>
-        reg._id === registrationId
-          ? { ...reg, status: 'approved' }
-          : reg
-      ));
-    } catch {
-      setError('Failed to approve registration');
+      // Show success message
+      alert('Registration Approved Successfully!');
+
+      // Refresh data to ensure we see the latest from DB
+      fetchRegistrations();
+      setError('');
+    } catch (err) {
+      console.error('Approve error:', err);
+      const data = err.response?.data;
+      const message = data?.message || 'Failed to approve registration';
+      setError(message);
+      alert(message); // Force user to see the error
+    }
+  };
+
+  const handleReject = async (registrationId) => {
+    const reason = window.prompt("Please enter a reason for rejection:");
+    if (reason === null) return; // User cancelled
+
+    try {
+      const token = localStorage.getItem('token');
+      await axios.patch(
+        `http://localhost:5000/api/admin/registrations/${registrationId}/reject`,
+        { reason },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      alert('Registration Rejected');
+      fetchRegistrations(); // Refresh data
+      setError('');
+    } catch (err) {
+      console.error('Reject error:', err);
+      const data = err.response?.data;
+      const message = data?.message || 'Failed to reject registration';
+      setError(message);
+      alert(message);
     }
   };
 
   const getStatusBadge = (status) => {
     const styles = {
       pending: { background: '#fff3cd', color: '#856404', border: '1px solid #ffeaa7' },
-      approved: { background: '#d4edda', color: '#155724', border: '1px solid #c3e6cb' }
+      approved: { background: '#d4edda', color: '#155724', border: '1px solid #c3e6cb' },
+      rejected: { background: '#f8d7da', color: '#721c24', border: '1px solid #f5c6cb' }
     };
 
     return (
@@ -123,21 +152,27 @@ const AdminDashboard = () => {
             marginBottom: '3rem'
           }}>
             <div className="feature-card">
-              <div className="feature-icon">📊</div>
+              <div className="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              </div>
               <h3>Total Registrations</h3>
               <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--deep-maroon)' }}>
                 {registrations.length}
               </p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">⏳</div>
+              <div className="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              </div>
               <h3>Pending Approvals</h3>
               <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--deep-maroon)' }}>
                 {registrations.filter(reg => reg.status === 'pending').length}
               </p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">✅</div>
+              <div className="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
               <h3>Approved Students</h3>
               <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'var(--deep-maroon)' }}>
                 {registrations.filter(reg => reg.status === 'approved').length}
@@ -162,7 +197,7 @@ const AdminDashboard = () => {
                   No registrations found.
                 </p>
               </div>
-              ) : (
+            ) : (
               <div className="admin-table-container">
                 <table className="admin-table">
                   <thead>
@@ -214,25 +249,48 @@ const AdminDashboard = () => {
                         </td>
                         <td style={{ padding: '1rem' }}>
                           {registration.status === 'pending' ? (
-                            <button
-                              onClick={() => handleApprove(registration._id)}
-                              style={{
-                                background: 'var(--antique-gold)',
-                                color: 'var(--primary-maroon)',
-                                border: 'none',
-                                padding: '0.5rem 1rem',
-                                borderRadius: '20px',
-                                fontSize: '0.9rem',
-                                fontWeight: '600',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease'
-                              }}
-                            >
-                              Approve
-                            </button>
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                              <button
+                                onClick={() => handleApprove(registration._id)}
+                                style={{
+                                  background: 'var(--antique-gold)',
+                                  color: 'var(--primary-maroon)',
+                                  border: 'none',
+                                  padding: '0.5rem 1rem',
+                                  borderRadius: '20px',
+                                  fontSize: '0.9rem',
+                                  fontWeight: '600',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.3s ease'
+                                }}
+                                title="Approve"
+                              >
+                                ✓ Approve
+                              </button>
+                              <button
+                                onClick={() => handleReject(registration._id)}
+                                style={{
+                                  background: '#dc3545',
+                                  color: 'white',
+                                  border: 'none',
+                                  padding: '0.5rem 1rem',
+                                  borderRadius: '20px',
+                                  fontSize: '0.9rem',
+                                  fontWeight: '600',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.3s ease'
+                                }}
+                                title="Reject"
+                              >
+                                ✕ Reject
+                              </button>
+                            </div>
                           ) : (
-                            <span style={{ color: 'var(--primary-maroon)', fontWeight: '600' }}>
-                              ✓ Approved
+                            <span style={{
+                              color: registration.status === 'approved' ? 'var(--primary-maroon)' : '#dc3545',
+                              fontWeight: '600'
+                            }}>
+                              {registration.status === 'approved' ? '✓ Approved' : '✕ Rejected'}
                             </span>
                           )}
                         </td>

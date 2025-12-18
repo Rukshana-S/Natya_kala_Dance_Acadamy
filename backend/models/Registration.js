@@ -74,6 +74,16 @@ const registrationSchema = new mongoose.Schema({
   },
   approvedAt: {
     type: Date
+  },
+  rejectedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  rejectedAt: {
+    type: Date
+  },
+  rejectionReason: {
+    type: String
   }
 }, {
   timestamps: true

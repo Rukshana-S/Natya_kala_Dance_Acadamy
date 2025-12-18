@@ -1,6 +1,10 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 const HeroSection = () => {
+  const location = useLocation();
+  const [userRole] = useState(localStorage.getItem('userRole') || '');
+  const hideRegister = userRole === 'admin' || location.pathname.startsWith('/admin');
   return (
     <section className="hero-section-custom" style={{
       minHeight: '100vh',
@@ -58,7 +62,8 @@ const HeroSection = () => {
             justifyContent: 'center',
             flexWrap: 'wrap'
           }}>
-            <Link to="/register" className="hero-btn-primary" style={{
+            {!hideRegister && (
+              <Link to="/register" className="hero-btn-primary" style={{
               background: '#d4a574',
               color: '#8b2345',
               padding: '1rem 2.5rem',
@@ -82,7 +87,8 @@ const HeroSection = () => {
                 e.currentTarget.style.boxShadow = '0 8px 15px rgba(0, 0, 0, 0.3)';
               }}>
               Register for Class →
-            </Link>
+              </Link>
+            )}
             <Link to="/about" className="hero-btn-secondary" style={{
               background: 'transparent',
               color: '#d4a574',

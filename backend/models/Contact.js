@@ -29,6 +29,17 @@ const contactSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  adminReply: {
+    type: String,
+    trim: true
+  },
+  repliedAt: {
+    type: Date
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   }
 });
 

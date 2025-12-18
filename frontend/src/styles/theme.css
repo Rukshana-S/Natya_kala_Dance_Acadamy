@@ -54,6 +54,13 @@ h6 {
   box-shadow: 0 2px 10px var(--soft-shadow);
 }
 
+/* Hide hamburger on desktop; show only in mobile media query below */
+.hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+}
+
 .navbar-content {
   display: flex;
   justify-content: space-between;
@@ -85,9 +92,15 @@ h6 {
 
 .nav-menu {
   display: flex;
-  list-style: none;
+  list-style: none !important;
   gap: 2rem;
   align-items: center;
+  padding-left: 0 !important;
+}
+
+.nav-menu li {
+  list-style: none !important;
+  padding-left: 0 !important;
 }
 
 .nav-link {

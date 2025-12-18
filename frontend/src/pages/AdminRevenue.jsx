@@ -8,29 +8,37 @@ const AdminRevenue = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        const fetchRevenue = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:5000/api/admin/revenue', {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setRevenue(response.data);
+                setLoading(false);
+            } catch {
+                setError('Failed to fetch revenue data');
+                setLoading(false);
+            }
+        };
+
         fetchRevenue();
     }, []);
 
-    const fetchRevenue = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/admin/revenue', {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setRevenue(response.data);
-            setLoading(false);
-        } catch (err) {
-            setError('Failed to fetch revenue data');
-            setLoading(false);
-        }
-    };
-
     const formatCurrency = (amount) => {
+        const value = Number.isFinite(amount) ? amount : 0;
         return new Intl.NumberFormat('en-IN', {
             style: 'currency',
             currency: 'INR',
             maximumFractionDigits: 0
-        }).format(amount);
+        }).format(value);
+    };
+
+    const safeMaxKey = (obj) => {
+        const entries = Object.entries(obj || {});
+        if (!entries.length) return 'N/A';
+        const max = entries.reduce((a, b) => (a[1] > b[1] ? a : b));
+        return String(max[0]);
     };
 
     if (loading) {
@@ -173,9 +181,9 @@ const AdminRevenue = () => {
                             boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                             border: '2px solid #8B1538'
                         }}>
-                            <h3 style={{ color: '#8B1538', fontSize: '1.3rem', marginBottom: '1rem' }}>Quarterly Plan</h3>
+                            <h3 style={{ color: '#8B1538', fontSize: '1.3rem', marginBottom: '1rem' }}>Weekly Plan</h3>
                             <div className="stat-value" style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#8B1538' }}>
-                                {formatCurrency(revenue.feePlanRevenue.quarterly)}
+                                {formatCurrency(revenue.feePlanRevenue.weekly)}
                             </div>
                         </div>
 
@@ -239,24 +247,37 @@ const AdminRevenue = () => {
                     borderRadius: '15px',
                     border: '2px solid #D4AF37'
                 }}>
-                    <h3 style={{ color: '#8B1538', marginBottom: '1rem' }}>💡 Financial Insights</h3>
+                    <h3 style={{ color: '#8B1538', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="9" y1="18" x2="15" y2="18"></line><line x1="10" y1="22" x2="14" y2="22"></line><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 16.5 8 4.5 4.5 0 0 0 12 3.5 4.5 4.5 0 0 0 7.5 8c0 1.54.8 2.87 2 3.75a7.51 7.51 0 0 1 1 2.25"></path></svg>
+                        Financial Insights
+                    </h3>
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                         <li style={{ marginBottom: '0.5rem', color: '#333' }}>
                             ✓ Total revenue collected: <strong>{formatCurrency(revenue.totalRevenue)}</strong>
                         </li>
                         <li style={{ marginBottom: '0.5rem', color: '#333' }}>
                             ✓ Highest revenue batch: <strong>
-                                {Object.entries(revenue.batchRevenue).reduce((a, b) => a[1] > b[1] ? a : b)[0].charAt(0).toUpperCase() + Object.entries(revenue.batchRevenue).reduce((a, b) => a[1] > b[1] ? a : b)[0].slice(1)}
+                                {(() => {
+                                    const key = safeMaxKey(revenue.batchRevenue);
+                                    return key === 'N/A' ? 'N/A' : key.charAt(0).toUpperCase() + key.slice(1);
+                                })()}
                             </strong>
                         </li>
                         <li style={{ marginBottom: '0.5rem', color: '#333' }}>
                             ✓ Most popular payment mode: <strong>
-                                {revenue.paymentModeDistribution.cash > revenue.paymentModeDistribution.gpay ? 'Cash' : 'GPay'}
+                                {(() => {
+                                    const cash = (revenue.paymentModeDistribution && Number.isFinite(revenue.paymentModeDistribution.cash)) ? revenue.paymentModeDistribution.cash : 0;
+                                    const gpay = (revenue.paymentModeDistribution && Number.isFinite(revenue.paymentModeDistribution.gpay)) ? revenue.paymentModeDistribution.gpay : 0;
+                                    return cash >= gpay ? 'Cash' : 'GPay';
+                                })()}
                             </strong>
                         </li>
                         <li style={{ marginBottom: '0.5rem', color: '#333' }}>
                             ✓ Most popular fee plan: <strong>
-                                {Object.entries(revenue.feePlanRevenue).reduce((a, b) => a[1] > b[1] ? a : b)[0].charAt(0).toUpperCase() + Object.entries(revenue.feePlanRevenue).reduce((a, b) => a[1] > b[1] ? a : b)[0].slice(1)}
+                                {(() => {
+                                    const key = safeMaxKey(revenue.feePlanRevenue);
+                                    return key === 'N/A' ? 'N/A' : key.charAt(0).toUpperCase() + key.slice(1);
+                                })()}
                             </strong>
                         </li>
                     </ul>

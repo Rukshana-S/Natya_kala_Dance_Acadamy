@@ -105,6 +105,16 @@ const Navbar = () => {
                     Revenue
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to="/admin/messages"
+                    className={`nav-link ${location.pathname === '/admin/messages' ? 'active' : ''
+                      }`}
+                    onClick={closeMenu}
+                  >
+                    Messages
+                  </Link>
+                </li>
               </>
             ) : (
               <>

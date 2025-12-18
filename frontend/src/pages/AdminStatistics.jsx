@@ -81,6 +81,9 @@ const AdminStatistics = () => {
                         padding: '2rem',
                         boxShadow: '0 8px 20px rgba(139, 21, 56, 0.3)'
                     }}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
                         <h3 style={{ color: '#D4AF37', fontSize: '1.3rem', marginBottom: '1rem' }}>Total Students</h3>
                         <div className="stat-value" style={{ fontSize: '3rem', fontWeight: 'bold' }}>{stats.totalStudents}</div>
                     </div>
@@ -92,6 +95,9 @@ const AdminStatistics = () => {
                         boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                         border: '2px solid #D4AF37'
                     }}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8B1538" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path></svg>
+                        </div>
                         <h3 style={{ color: '#8B1538', fontSize: '1.3rem', marginBottom: '1rem' }}>Morning Batch</h3>
                         <div className="stat-value" style={{ fontSize: '3rem', fontWeight: 'bold', color: '#8B1538' }}>
                             {stats.batchDistribution.morning}
@@ -105,6 +111,9 @@ const AdminStatistics = () => {
                         boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                         border: '2px solid #D4AF37'
                     }}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8B1538" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                        </div>
                         <h3 style={{ color: '#8B1538', fontSize: '1.3rem', marginBottom: '1rem' }}>Evening Batch</h3>
                         <div className="stat-value" style={{ fontSize: '3rem', fontWeight: 'bold', color: '#8B1538' }}>
                             {stats.batchDistribution.evening}
@@ -118,6 +127,9 @@ const AdminStatistics = () => {
                         boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
                         border: '2px solid #D4AF37'
                     }}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8B1538" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                        </div>
                         <h3 style={{ color: '#8B1538', fontSize: '1.3rem', marginBottom: '1rem' }}>Weekend Batch</h3>
                         <div className="stat-value" style={{ fontSize: '3rem', fontWeight: 'bold', color: '#8B1538' }}>
                             {stats.batchDistribution.weekend}
@@ -131,6 +143,9 @@ const AdminStatistics = () => {
                         padding: '2rem',
                         boxShadow: '0 8px 20px rgba(156, 39, 176, 0.3)'
                     }}>
+                        <div style={{ marginBottom: '1rem' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#F4E4BC" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </div>
                         <h3 style={{ color: '#F4E4BC', fontSize: '1.3rem', marginBottom: '1rem' }}>Inclusive Program</h3>
                         <div className="stat-value" style={{ fontSize: '3rem', fontWeight: 'bold' }}>
                             {stats.inclusiveStudents}

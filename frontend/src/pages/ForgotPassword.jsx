@@ -33,22 +33,15 @@ const ForgotPassword = () => {
     return (
         <div style={{
             minHeight: '100vh',
-            background: 'linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("https://images.unsplash.com/photo-1543050672-f81d289b1011?q=80&w=2070&auto=format&fit=crop")',
+            background: 'linear-gradient(135deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/auth.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1rem'
+            justifyContent: 'center'
         }}>
-            <div style={{
-                background: 'rgba(255, 255, 255, 0.95)',
-                padding: '2.5rem',
-                borderRadius: '15px',
-                width: '100%',
-                maxWidth: '400px',
-                boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
-            }}>
+            <div style={{ maxWidth: '400px', background: 'rgba(245,230,211,0.98)', padding: '3rem', borderRadius: '15px', textAlign: 'center', boxShadow: '0 20px 60px rgba(0,0,0,0.45)' }}>
                 <h2 style={{ color: 'var(--deep-maroon)', marginBottom: '1.5rem', textAlign: 'center' }}>Forgot Password</h2>
 
                 {message && (

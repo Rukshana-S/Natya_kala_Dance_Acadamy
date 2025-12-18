@@ -22,7 +22,7 @@ const RegisterClass = () => {
     const { name, value, type, checked } = e.target;
 
     let newFormData = { ...formData };
-    
+
     if (type === 'checkbox') {
       newFormData[name] = checked;
       // If mentally challenged, clear batch and level selections
@@ -93,9 +93,9 @@ const RegisterClass = () => {
   };
 
   const isFormValid = () => {
-    const baseFields = formData.fullName && formData.age && formData.email && 
-                      formData.phoneNumber && formData.feePlan && formData.paymentMode;
-    
+    const baseFields = formData.fullName && formData.age && formData.email &&
+      formData.phoneNumber && formData.feePlan && formData.paymentMode;
+
     if (formData.isMentallyChallenged) {
       return baseFields && formData.amount;
     } else {
@@ -116,7 +116,9 @@ const RegisterClass = () => {
         <div className="container">
           <div className="enhanced-form-container">
             <div className="form-header">
-              <div className="form-icon">🎭</div>
+              <div className="form-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
               <h2>Join Our Sacred Journey</h2>
               <p>Begin your transformation through the divine art of Bharatanatyam</p>
             </div>
@@ -124,7 +126,11 @@ const RegisterClass = () => {
             {submitMessage && (
               <div className={`alert ${submitMessage.includes('Error') ? 'alert-error' : 'alert-success'}`}>
                 <div className="alert-icon">
-                  {submitMessage.includes('Error') ? '⚠️' : '✅'}
+                  {submitMessage.includes('Error') ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                  ) : (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  )}
                 </div>
                 <div>{submitMessage}</div>
               </div>
@@ -133,7 +139,9 @@ const RegisterClass = () => {
             <form onSubmit={handleSubmit} className="enhanced-form">
               <div className="form-section">
                 <div className="section-header">
-                  <span className="section-icon">👤</span>
+                  <span className="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </span>
                   <h3>Personal Information</h3>
                 </div>
 
@@ -202,8 +210,9 @@ const RegisterClass = () => {
                       checked={formData.isMentallyChallenged}
                       onChange={handleChange}
                     />
-                    <label htmlFor="isMentallyChallenged" className="checkbox-label">
-                      💜 Is the student mentally challenged? (Join our inclusive program)
+                    <label htmlFor="isMentallyChallenged" className="checkbox-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: '#9c27b0' }}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      Is the student mentally challenged? (Join our inclusive program)
                     </label>
                   </div>
                 </div>
@@ -212,7 +221,9 @@ const RegisterClass = () => {
               {!formData.isMentallyChallenged && (
                 <div className="form-section">
                   <div className="section-header">
-                    <span className="section-icon">🕉️</span>
+                    <span className="section-icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2"></path><path d="M12 21v2"></path><path d="M4.22 4.22l1.42 1.42"></path><path d="M18.36 18.36l1.42 1.42"></path><path d="M1 12h2"></path><path d="M21 12h2"></path><path d="M4.22 19.78l1.42-1.42"></path><path d="M18.36 5.64l1.42-1.42"></path></svg>
+                    </span>
                     <h3>Class Preferences</h3>
                   </div>
 
@@ -227,9 +238,9 @@ const RegisterClass = () => {
                         required
                       >
                         <option value="">Choose your preferred time</option>
-                        <option value="morning">🌅 Morning (6:30 AM - 11:00 AM)</option>
-                        <option value="evening">🌆 Evening (5:00 PM - 9:30 PM)</option>
-                        <option value="weekend">🎭 Weekend (8:00 AM - 6:00 PM)</option>
+                        <option value="morning"> Morning (6:30 AM - 11:00 AM)</option>
+                        <option value="evening"> Evening (5:00 PM - 9:30 PM)</option>
+                        <option value="weekend"> Weekend (8:00 AM - 6:00 PM)</option>
                       </select>
                     </div>
                     <div className="form-group">
@@ -242,10 +253,9 @@ const RegisterClass = () => {
                         required
                       >
                         <option value="">Select your experience</option>
-                        <option value="complete-beginner">🌱 Complete Beginner</option>
-                        <option value="some-experience">🌿 Some Experience</option>
-                        <option value="intermediate">🌳 Intermediate</option>
-                        <option value="advanced">🏛️ Advanced</option>
+                        <option value="complete-beginner"> Complete Beginner</option>
+                        <option value="intermediate"> Intermediate</option>
+                        <option value="advanced"> Advanced</option>
                       </select>
                     </div>
                   </div>
@@ -255,7 +265,7 @@ const RegisterClass = () => {
               {formData.isMentallyChallenged && (
                 <div className="form-section inclusive-info-section">
                   <div className="section-header">
-                    <span className="section-icon">💜</span>
+
                     <h3>Your Assigned Program</h3>
                   </div>
                   {assignedTimetable && (
@@ -288,8 +298,10 @@ const RegisterClass = () => {
 
               <div className="form-section">
                 <div className="section-header">
-                  <span className="section-icon">💰</span>
-                  <h3>Fee & Payment Details</h3>
+                  <span className="section-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                  </span>
+                  <h3>Fee and Payment Details</h3>
                 </div>
 
                 <div className="form-row">
@@ -344,7 +356,13 @@ const RegisterClass = () => {
                   className="enhanced-submit-btn"
                   disabled={isSubmitting || !isFormValid()}
                 >
-                  <span className="btn-icon">{isSubmitting ? '⏳' : '🎭'}</span>
+                  <span className="btn-icon">
+                    {isSubmitting ? (
+                      <svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line></svg>
+                    ) : (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    )}
+                  </span>
                   <span>{isSubmitting ? 'Submitting Your Application...' : 'Begin My Sacred Journey'}</span>
                 </button>
                 <p className="form-note">

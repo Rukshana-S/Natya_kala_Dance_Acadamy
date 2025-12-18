@@ -11,22 +11,53 @@ const Home = () => {
 
   const features = [
     {
-      icon: '🎭',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary-maroon)' }}>
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      ),
       title: 'Expert Gurus',
       description: 'Learn from renowned masters with decades of experience in classical Bharatanatyam tradition.'
     },
     {
-      icon: '🕉️',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary-maroon)' }}>
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+          <path d="m4.93 19.07 1.41-1.41"></path>
+          <path d="m19.07 19.07-1.41-1.41"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+        </svg>
+      ),
       title: 'Traditional Training',
       description: 'Authentic Guru-Shishya parampara methodology preserving ancient dance wisdom.'
     },
     {
-      icon: '📚',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary-maroon)' }}>
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+      ),
       title: 'Comprehensive Curriculum',
       description: 'From basic adavus to complex varnams, master every aspect of this sacred art form.'
     },
     {
-      icon: '🏛️',
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--primary-maroon)' }}>
+          <line x1="3" y1="22" x2="21" y2="22"></line>
+          <line x1="6" y1="18" x2="6" y2="11"></line>
+          <line x1="10" y1="18" x2="10" y2="11"></line>
+          <line x1="14" y1="18" x2="14" y2="11"></line>
+          <line x1="18" y1="18" x2="18" y2="11"></line>
+          <polygon points="12 2 20 7 4 7 12 2"></polygon>
+        </svg>
+      ),
       title: 'Cultural Excellence',
       description: 'Immerse yourself in the rich heritage and spiritual essence of South Indian culture.'
     }

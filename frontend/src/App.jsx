@@ -11,6 +11,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminStatistics from './pages/AdminStatistics';
 import AdminRevenue from './pages/AdminRevenue';
+import AdminMessages from './pages/AdminMessages';
 import Schedule from './pages/Schedule';
 import Terms from './pages/Terms';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -40,9 +41,26 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<RegisterClass />} />
                 <Route path="/schedules" element={<Schedule />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                <Route path="/admin/statistics" element={<AdminStatistics />} />
-                <Route path="/admin/revenue" element={<AdminRevenue />} />
+                <Route path="/admin/dashboard" element={
+                  <ProtectedRoute adminOnly>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/admin/statistics" element={
+                  <ProtectedRoute adminOnly>
+                    <AdminStatistics />
+                  </ProtectedRoute>
+                } />
+                <Route path="/admin/revenue" element={
+                  <ProtectedRoute adminOnly>
+                    <AdminRevenue />
+                  </ProtectedRoute>
+                } />
+                <Route path="/admin/messages" element={
+                  <ProtectedRoute adminOnly>
+                    <AdminMessages />
+                  </ProtectedRoute>
+                } />
               </Routes>
               <Footer />
             </ProtectedRoute>

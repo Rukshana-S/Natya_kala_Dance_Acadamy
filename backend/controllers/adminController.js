@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Registration = require('../models/Registration');
 const Schedule = require('../models/Schedule');
 
@@ -5,7 +6,7 @@ const adminController = {
   // Get all registrations for admin dashboard
   getAllRegistrations: async (req, res) => {
     try {
-      const { status, page = 1, limit = 50 } = req.query;
+      const { status } = req.query;
 
       let query = {};
       if (status && ['pending', 'approved', 'rejected'].includes(status)) {
@@ -37,47 +38,34 @@ const adminController = {
         return res.status(400).json({ message: 'Registration is already approved' });
       }
 
-      // If scheduleId is missing, try to find a matching schedule based on preferredBatch
-      if (!registration.scheduleId && registration.preferredBatch) {
-        // Convert kebab-case 'morning-weekday' to 'Morning Weekday' pattern for loosely matching
-        // OR better, try to find a schedule that *contains* the words or ignore case.
-        // Given the frontend values: 'morning-weekday', 'evening-weekday', 'weekend-morning', 'weekend-afternoon'
-        // We will try to match these to Schedule batchNames.
-
-        let searchName = registration.preferredBatch.replace(/-/g, ' ');
-        // Regex to match case-insensitive
-        const schedule = await Schedule.findOne({
-          batchName: { $regex: new RegExp(searchName, 'i') },
-          isActive: true
-        });
-
-        if (schedule) {
-          registration.scheduleId = schedule._id;
-        }
-      }
-
       // Check capacity before approving
-      if (registration.scheduleId) {
+      if (registration.scheduleId && mongoose.Types.ObjectId.isValid(registration.scheduleId)) {
         const schedule = await Schedule.findById(registration.scheduleId);
         if (schedule) {
           if (schedule.enrolledCount >= schedule.capacity) {
             return res.status(400).json({ message: 'Cannot approve: Class is full' });
           }
-          schedule.enrolledCount += 1;
-          await schedule.save();
+          // Use updateOne to increment count without triggering full validation (e.g. missing instructor)
+          await Schedule.updateOne(
+            { _id: schedule._id },
+            { $inc: { enrolledCount: 1 } }
+          );
         }
       }
 
-      registration.status = 'approved';
-      // Only set approvedBy when we have a real ObjectId user
-      if (req.user && req.user._id && req.user._id !== 'admin') {
-        registration.approvedBy = req.user._id;
-      } else {
-        registration.approvedBy = null;
-      }
-      registration.approvedAt = new Date();
+      // Prepare update data
+      const updateData = {
+        status: 'approved',
+        approvedAt: new Date(),
+        // Only set approvedBy when we have a real ObjectId user (not 'admin')
+        approvedBy: (req.user && req.user._id && req.user._id !== 'admin') ? req.user._id : null
+      };
 
-      await registration.save();
+      // Use updateOne to avoid full document validation (e.g. for legacy data missing fields)
+      await Registration.updateOne(
+        { _id: registration._id },
+        { $set: updateData }
+      );
 
       res.json({
         message: 'Registration approved successfully',
@@ -85,14 +73,14 @@ const adminController = {
           id: registration._id,
           fullName: registration.fullName,
           email: registration.email,
-          status: registration.status,
-          approvedAt: registration.approvedAt,
+          status: 'approved',
+          approvedAt: updateData.approvedAt,
           scheduleId: registration.scheduleId
         }
       });
     } catch (error) {
       console.error('Approve registration error:', error);
-      res.status(500).json({ message: 'Server error approving registration' });
+      res.status(500).json({ message: error.message || 'Server error approving registration' });
     }
   },
 
@@ -111,12 +99,18 @@ const adminController = {
         return res.status(400).json({ message: 'Registration is already rejected' });
       }
 
-      registration.status = 'rejected';
-      registration.rejectedBy = req.user._id;
-      registration.rejectedAt = new Date();
-      registration.rejectionReason = reason;
+      // Prepare update data
+      const updateData = {
+        status: 'rejected',
+        rejectedAt: new Date(),
+        rejectedBy: (req.user && req.user._id && req.user._id !== 'admin') ? req.user._id : null,
+        rejectionReason: reason
+      };
 
-      await registration.save();
+      await Registration.updateOne(
+        { _id: registration._id },
+        { $set: updateData }
+      );
 
       res.json({
         message: 'Registration rejected',
@@ -124,13 +118,13 @@ const adminController = {
           id: registration._id,
           fullName: registration.fullName,
           email: registration.email,
-          status: registration.status,
-          rejectedAt: registration.rejectedAt
+          status: 'rejected',
+          rejectedAt: updateData.rejectedAt
         }
       });
     } catch (error) {
       console.error('Reject registration error:', error);
-      res.status(500).json({ message: 'Server error rejecting registration' });
+      res.status(500).json({ message: error.message || 'Server error rejecting registration' });
     }
   },
 
@@ -243,7 +237,7 @@ const adminController = {
       };
       const feePlanRevenue = {
         monthly: 0,
-        quarterly: 0,
+        weekly: 0,
         yearly: 0
       };
       const paymentModeDistribution = {
