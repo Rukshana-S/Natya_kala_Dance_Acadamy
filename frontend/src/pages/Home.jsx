@@ -1,8 +1,10 @@
+
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import HeroSection from '../components/HeroSection';
 import FeatureCard from '../components/FeatureCard';
 import TestimonialCard from '../components/TestimonialCard';
+import ScrollReveal from '../components/ScrollReveal';
 
 const Home = () => {
   const [userRole] = useState(
@@ -83,11 +85,13 @@ const Home = () => {
       {/* Why Choose Natya Kala Section */}
       <section className="section">
         <div className="container">
-          <h2 className="section-title">Why Choose Natya Kala</h2>
-          <p className="section-subtitle">
-            Discover the sacred art of Bharatanatyam through our time-honored teaching methods
-            and deep cultural immersion.
-          </p>
+          <ScrollReveal>
+            <h2 className="section-title">Why Choose Natya Kala</h2>
+            <p className="section-subtitle">
+              Discover the sacred art of Bharatanatyam through our time-honored teaching methods
+              and deep cultural immersion.
+            </p>
+          </ScrollReveal>
           <div className="features-grid">
             {features.map((feature, index) => (
               <FeatureCard
@@ -105,29 +109,31 @@ const Home = () => {
       <section className="section mandala-bg">
         <div className="container">
           <div className="two-column">
-            <div className="column-image">
+            <ScrollReveal className="column-image">
               <img
                 src="/home.jpg"
                 alt="Traditional South Indian Temple Architecture"
                 style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
               />
-            </div>
+            </ScrollReveal>
             <div className="column-content">
-              <h2>Preserving Sacred Traditions</h2>
-              <p>
-                For over three decades, Natya Kala Dance Academy has been a beacon of
-                traditional Bharatanatyam education. Our commitment to preserving the
-                authentic essence of this divine art form ensures that every student
-                connects with the spiritual and cultural depths of classical Indian dance.
-              </p>
-              <p>
-                Through the sacred Guru-Shishya parampara, we nurture not just skilled
-                dancers, but cultural ambassadors who carry forward the timeless legacy
-                of Bharatanatyam with reverence and excellence.
-              </p>
-              <Link to="/about" className="btn-primary">
-                Discover Our Story
-              </Link>
+              <ScrollReveal>
+                <h2>Preserving Sacred Traditions</h2>
+                <p>
+                  For over three decades, Natya Kala Dance Academy has been a beacon of
+                  traditional Bharatanatyam education. Our commitment to preserving the
+                  authentic essence of this divine art form ensures that every student
+                  connects with the spiritual and cultural depths of classical Indian dance.
+                </p>
+                <p>
+                  Through the sacred Guru-Shishya parampara, we nurture not just skilled
+                  dancers, but cultural ambassadors who carry forward the timeless legacy
+                  of Bharatanatyam with reverence and excellence.
+                </p>
+                <Link to="/about" className="btn-primary">
+                  Discover Our Story
+                </Link>
+              </ScrollReveal>
             </div>
           </div>
         </div>
@@ -136,10 +142,12 @@ const Home = () => {
       {/* Student Experiences Section */}
       <section className="section">
         <div className="container">
-          <h2 className="section-title">Student Experiences</h2>
-          <p className="section-subtitle">
-            Hear from our students about their transformative journey in classical dance.
-          </p>
+          <ScrollReveal>
+            <h2 className="section-title">Student Experiences</h2>
+            <p className="section-subtitle">
+              Hear from our students about their transformative journey in classical dance.
+            </p>
+          </ScrollReveal>
           <div className="testimonials-grid">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
@@ -157,19 +165,22 @@ const Home = () => {
       {userRole !== 'admin' && (
         <section className="cta-section">
           <div className="container">
-            <h2>Begin Your Journey Today</h2>
-            <p>
-              Step into the world of Bharatanatyam and discover the dancer within you.
-              Join our academy and become part of a tradition that spans centuries.
-            </p>
-            <Link to="/register" className="btn-primary">
-              Join the Academy
-            </Link>
+            <ScrollReveal>
+              <h2>Begin Your Journey Today</h2>
+              <p>
+                Step into the world of Bharatanatyam and discover the dancer within you.
+                Join our academy and become part of a tradition that spans centuries.
+              </p>
+              <Link to="/register" className="btn-primary glow-pulse">
+                Join the Academy
+              </Link>
+            </ScrollReveal>
           </div>
         </section>
       )}
     </div>
   );
 };
+
 
 export default Home;

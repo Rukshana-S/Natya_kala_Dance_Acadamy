@@ -21,9 +21,8 @@ const HeroSection = () => {
       padding: '2rem'
     }}>
       <div className="container" style={{ maxWidth: '800px' }}>
-        <div style={{
-          animation: 'fadeInUp 1s ease-out'
-        }}>
+
+        <div className="animate-fade-up">
           <h1 className="hero-title-custom" style={{
             fontSize: '4.5rem',
             fontWeight: '700',
@@ -64,7 +63,7 @@ const HeroSection = () => {
             flexWrap: 'wrap'
           }}>
             {!hideRegister && (
-              <Link to="/register" className="hero-btn-primary" style={{
+              <Link to="/register" className="hero-btn-primary glow-pulse" style={{
                 background: '#d4a574',
                 color: '#8b2345',
                 padding: '1rem 2.5rem',
@@ -121,16 +120,7 @@ const HeroSection = () => {
         </div>
       </div>
       <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
+        /* Responsive styles for Hero Section */
         
         /* Responsive styles for Hero Section */
         @media (max-width: 768px) {

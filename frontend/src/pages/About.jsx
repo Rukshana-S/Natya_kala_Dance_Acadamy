@@ -1,4 +1,6 @@
+
 import { useState } from 'react';
+import ScrollReveal from '../components/ScrollReveal';
 
 const About = () => {
   const [userRole] = useState(
@@ -15,14 +17,17 @@ const About = () => {
         background: 'linear-gradient(rgba(139,35,69,0.6), rgba(101,26,52,0.6)), url("/OurStory.jpg")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
         color: 'white'
       }}>
         <div className="container">
-          <h1>Our Story</h1>
-          <p>
-            A legacy of devotion, discipline, and divine dance spanning over three decades
-            of preserving the sacred art of Bharatanatyam.
-          </p>
+          <div className="animate-fade-up">
+            <h1>Our Story</h1>
+            <p>
+              A legacy of devotion, discipline, and divine dance spanning over three decades
+              of preserving the sacred art of Bharatanatyam.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -30,7 +35,7 @@ const About = () => {
       <section className="section">
         <div className="container">
           <div className="two-column">
-            <div className="column-content">
+            <ScrollReveal className="column-content">
               <h2>A Sacred Heritage</h2>
               <p>
                 Natya Kala Dance Academy was founded with a vision to preserve and propagate
@@ -43,14 +48,14 @@ const About = () => {
                 serves as a bridge between the ancient and the contemporary, ensuring that
                 the spiritual essence of Bharatanatyam continues to flourish in modern times.
               </p>
-            </div>
-            <div className="column-image">
+            </ScrollReveal>
+            <ScrollReveal className="column-image">
               <img
                 src="/ClassicalDancer.jpg"
                 alt="Classical Bharatanatyam Dancer"
                 style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.25)' }}
               />
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -59,14 +64,14 @@ const About = () => {
       <section className="section mandala-bg">
         <div className="container">
           <div className="two-column">
-            <div className="column-image">
+            <ScrollReveal className="column-image">
               <img
                 src="/GuruSisiya.jpg"
                 alt="Guru teaching student"
                 style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.25)' }}
               />
-            </div>
-            <div className="column-content">
+            </ScrollReveal>
+            <ScrollReveal className="column-content">
               <h2>The Guru-Shishya Parampara</h2>
               <p>
                 At the heart of our teaching methodology lies the sacred Guru-Shishya tradition,
@@ -81,7 +86,7 @@ const About = () => {
                 each student's unique potential while maintaining the purity and authenticity
                 of classical Bharatanatyam.
               </p>
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -90,7 +95,7 @@ const About = () => {
       <section className="section">
         <div className="container">
           <div className="two-column">
-            <div className="column-content">
+            <ScrollReveal className="column-content">
               <h2>From Beginners to Masters</h2>
               <p>
                 Our comprehensive curriculum is designed to guide students through every stage
@@ -129,14 +134,14 @@ const About = () => {
                   </li>
                 </ul>
               </div>
-            </div>
-            <div className="column-image">
+            </ScrollReveal>
+            <ScrollReveal className="column-image">
               <img
                 src="/begineer.jpg"
                 alt="Bharatanatyam performance"
                 style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '8px', boxShadow: '0 8px 24px rgba(0,0,0,0.25)' }}
               />
-            </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -145,14 +150,16 @@ const About = () => {
       {userRole !== 'admin' && (
         <section className="cta-section">
           <div className="container">
-            <h2>Join Our Sacred Journey</h2>
-            <p>
-              Become part of our family and experience the transformative power of Bharatanatyam.
-              Your journey into this divine art form begins with a single step.
-            </p>
-            <a href="/register" className="btn-primary">
-              Start Your Training
-            </a>
+            <ScrollReveal>
+              <h2>Join Our Sacred Journey</h2>
+              <p>
+                Become part of our family and experience the transformative power of Bharatanatyam.
+                Your journey into this divine art form begins with a single step.
+              </p>
+              <a href="/register" className="btn-primary glow-pulse">
+                Start Your Training
+              </a>
+            </ScrollReveal>
           </div>
         </section>
       )}
