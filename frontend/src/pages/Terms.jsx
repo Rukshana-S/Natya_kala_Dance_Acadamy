@@ -33,7 +33,7 @@ const Terms = () => {
 
                     <div className="content-block" style={{ marginBottom: '2rem' }}>
                         <h3 style={{ color: 'var(--primary-maroon)', marginBottom: '1rem' }}>4. Health and Safety</h3>
-                        <p>Students should inform the instructor of any medical conditions. The academy is not liable for injuries sustained during unauthorized practice.</p>
+                        <p>Students should inform the academy staff of any medical conditions. The academy is not liable for injuries sustained during unauthorized practice.</p>
                     </div>
 
                     <p style={{ marginTop: '2rem', fontStyle: 'italic', color: 'gray' }}>Last Updated: December 2024</p>

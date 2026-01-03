@@ -8,7 +8,8 @@ const AdminScheduleManager = () => {
     days: [],
     startTime: '',
     endTime: '',
-    instructor: '',
+    startTime: '',
+    endTime: '',
     feeAmount: '',
     capacity: '',
     timetable: [],
@@ -86,7 +87,7 @@ const AdminScheduleManager = () => {
     setSuccess('');
 
     try {
-      if (!formData.batchName || !formData.instructor || !formData.feeAmount || !formData.capacity) {
+      if (!formData.batchName || !formData.feeAmount || !formData.capacity) {
         setError('Please fill all required fields');
         return;
       }
@@ -123,7 +124,8 @@ const AdminScheduleManager = () => {
       days: schedule.days,
       startTime: schedule.startTime,
       endTime: schedule.endTime,
-      instructor: schedule.instructor,
+      startTime: schedule.startTime,
+      endTime: schedule.endTime,
       feeAmount: schedule.feeAmount,
       capacity: schedule.capacity,
       timetable: schedule.timetable || [],
@@ -152,7 +154,8 @@ const AdminScheduleManager = () => {
       days: [],
       startTime: '',
       endTime: '',
-      instructor: '',
+      startTime: '',
+      endTime: '',
       feeAmount: '',
       capacity: '',
       timetable: [],
@@ -291,25 +294,7 @@ const AdminScheduleManager = () => {
               </div>
             </div>
 
-            <div style={{ marginBottom: '1rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: 'var(--dark-brown)' }}>
-                Instructor *
-              </label>
-              <input
-                type="text"
-                name="instructor"
-                value={formData.instructor}
-                onChange={handleInputChange}
-                placeholder="Instructor name"
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #ddd',
-                  borderRadius: '6px',
-                  fontSize: '1rem'
-                }}
-              />
-            </div>
+
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
@@ -518,9 +503,7 @@ const AdminScheduleManager = () => {
                         </p>
                       </>
                     )}
-                    <p style={{ margin: '0.3rem 0', fontSize: '0.9rem', color: 'var(--dark-brown)' }}>
-                      <strong>Instructor:</strong> {schedule.instructor}
-                    </p>
+
                     <p style={{ margin: '0.3rem 0', fontSize: '0.9rem', color: 'var(--dark-brown)' }}>
                       <strong>Fee:</strong> ₹{schedule.feeAmount} | <strong>Capacity:</strong> {schedule.enrolledCount}/{schedule.capacity}
                     </p>

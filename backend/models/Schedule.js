@@ -29,11 +29,7 @@ const scheduleSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  instructor: {
-    type: String,
-    required: true,
-    trim: true
-  },
+
   feeAmount: {
     type: Number,
     required: true,
@@ -54,7 +50,7 @@ const scheduleSchema = new mongoose.Schema({
     default: true
   },
   timetable: [{
-    day: { type: String, enum: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], required: true },
+    day: { type: String, enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], required: true },
     time: { type: String, required: true },
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },

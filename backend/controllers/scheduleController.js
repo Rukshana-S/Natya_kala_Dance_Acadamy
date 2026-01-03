@@ -5,10 +5,10 @@ const scheduleController = {
   // Admin: Create new schedule
   createSchedule: async (req, res) => {
     try {
-      const { batchName, days, startTime, endTime, instructor, feeAmount, capacity, description, timetable } = req.body;
+      const { batchName, days, startTime, endTime, feeAmount, capacity, description, timetable } = req.body;
 
       // Validate required fields
-      if (!batchName || feeAmount === undefined || capacity === undefined || !instructor) {
+      if (!batchName || feeAmount === undefined || capacity === undefined) {
         return res.status(400).json({ message: 'Required fields missing' });
       }
 
@@ -17,7 +17,7 @@ const scheduleController = {
         days: days || [],
         startTime: startTime || '',
         endTime: endTime || '',
-        instructor,
+
         feeAmount,
         capacity,
         description: description || '',
@@ -58,7 +58,7 @@ const scheduleController = {
   getPublicSchedules: async (req, res) => {
     try {
       const schedules = await Schedule.find({ isActive: true })
-        .select('batchName days startTime endTime instructor feeAmount capacity enrolledCount description timetable')
+        .select('batchName days startTime endTime feeAmount capacity enrolledCount description timetable')
         .sort({ createdAt: -1 });
 
       res.json(schedules);
@@ -88,7 +88,7 @@ const scheduleController = {
   // Admin: Update schedule
   updateSchedule: async (req, res) => {
     try {
-      const { batchName, days, startTime, endTime, instructor, feeAmount, capacity, isActive, description, timetable } = req.body;
+      const { batchName, days, startTime, endTime, feeAmount, capacity, isActive, description, timetable } = req.body;
 
       const schedule = await Schedule.findById(req.params.id);
       if (!schedule) return res.status(404).json({ message: 'Schedule not found' });
@@ -98,7 +98,7 @@ const scheduleController = {
       if (days) schedule.days = days;
       if (startTime) schedule.startTime = startTime;
       if (endTime) schedule.endTime = endTime;
-      if (instructor) schedule.instructor = instructor;
+
       if (feeAmount !== undefined) schedule.feeAmount = feeAmount;
       if (capacity !== undefined) schedule.capacity = capacity;
       if (isActive !== undefined) schedule.isActive = isActive;
