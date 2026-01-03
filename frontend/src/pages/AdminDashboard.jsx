@@ -17,14 +17,14 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const [usersRes, messagesRes, schedulesRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/api/admin/users`, { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get(`${API_BASE_URL}/api/contact/messages`, { headers: { Authorization: `Bearer ${token}` } }),
+      const [registrationsRes, messagesRes, schedulesRes] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/admin/registrations`, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`${API_BASE_URL}/api/contact/admin`, { headers: { Authorization: `Bearer ${token}` } }),
         axios.get(`${API_BASE_URL}/api/schedules?isActive=true`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
-      setRegistrations(regsRes.data);
-      setTimetables(timeRes.data);
+      setRegistrations(registrationsRes.data);
+      setTimetables(schedulesRes.data);
     } catch (err) {
       console.error('Fetch error:', err);
       setError('Failed to fetch dashboard data');

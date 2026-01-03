@@ -34,7 +34,7 @@ api.interceptors.response.use(
 
 export const authAPI = {
   login: (credentials) => api.post('/auth/login', credentials),
-  adminLogin: (credentials) => api.post('/auth/admin-login', credentials),
+  adminLogin: (credentials) => api.post('/auth/login', credentials),
 };
 
 export const registrationAPI = {
