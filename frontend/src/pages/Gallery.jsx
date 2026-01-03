@@ -10,6 +10,16 @@ const Gallery = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const getImageUrl = (url) => {
+        if (!url) return '';
+        if (url.includes('localhost:5000/uploads/')) {
+            const filename = url.split('/').pop();
+            return `${API_BASE_URL}/uploads/${filename}`;
+        }
+        if (url.startsWith('http') || url.startsWith('data:')) return url;
+        return `${API_BASE_URL}/uploads/${url}`;
+    };
+
     const albumTypes = [
         { id: 'all', label: 'All' },
         { id: 'classroom-practice', label: 'Classroom Practice' },
@@ -163,7 +173,7 @@ const Gallery = () => {
                                         </div>
                                     ) : (
                                         <img
-                                            src={item.mediaUrl}
+                                            src={getImageUrl(item.mediaUrl)}
                                             alt={item.title}
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                             onError={(e) => { e.target.src = 'https://placehold.co/600x400?text=Image+Not+Found'; }}
@@ -275,7 +285,7 @@ const Gallery = () => {
                             <div className="modal-media" style={{ flex: '1.5', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 {selectedItem.mediaType === 'video' ? (
                                     <video
-                                        src={selectedItem.mediaUrl}
+                                        src={getImageUrl(selectedItem.mediaUrl)}
                                         controls
                                         autoPlay
                                         style={{
@@ -287,7 +297,7 @@ const Gallery = () => {
                                     />
                                 ) : (
                                     <img
-                                        src={selectedItem.mediaUrl}
+                                        src={getImageUrl(selectedItem.mediaUrl)}
                                         alt={selectedItem.title}
                                         style={{
                                             maxWidth: '100%',

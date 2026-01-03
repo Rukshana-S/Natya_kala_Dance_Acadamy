@@ -37,6 +37,16 @@ const AdminGallery = () => {
     const [status, setStatus] = useState({ type: '', message: '' });
     const [editId, setEditId] = useState(null);
 
+    const getImageUrl = (url) => {
+        if (!url) return '';
+        if (url.includes('localhost:5000/uploads/')) {
+            const filename = url.split('/').pop();
+            return `${API_BASE_URL}/uploads/${filename}`;
+        }
+        if (url.startsWith('http') || url.startsWith('data:')) return url;
+        return `${API_BASE_URL}/uploads/${url}`;
+    };
+
     const albumTypes = [
         { id: 'classroom-practice', label: 'Classroom Practice', icon: <Footprints size={16} /> },
         { id: 'stage-performances', label: 'Stage Performances', icon: <Drama size={16} /> },
@@ -306,7 +316,7 @@ const AdminGallery = () => {
                         {featuredItems.map(item => (
                             <div key={item._id} className="featured-card">
                                 <div className="card-badge featured-badge">Featured</div>
-                                <img src={item.mediaUrl} alt={item.title} className="card-img" />
+                                <img src={getImageUrl(item.mediaUrl)} alt={item.title} className="card-img" />
                                 <div className="card-overlay">
                                     <h4>{item.title}</h4>
                                     <span className="card-tag">{getLabelForType(item.albumType)}</span>
@@ -363,10 +373,10 @@ const AdminGallery = () => {
                                             {item.mediaType === 'video' ? (
                                                 <div className="video-placeholder">
                                                     <Video size={40} color="white" />
-                                                    <video src={item.mediaUrl} className="card-video-preview" muted />
+                                                    <video src={getImageUrl(item.mediaUrl)} className="card-video-preview" muted />
                                                 </div>
                                             ) : (
-                                                <img src={item.mediaUrl} alt={item.title} />
+                                                <img src={getImageUrl(item.mediaUrl)} alt={item.title} />
                                             )}
 
                                             <div className="card-grad-overlay">
