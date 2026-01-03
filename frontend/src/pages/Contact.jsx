@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +25,7 @@ const Contact = () => {
 
   const fetchUserMessages = async (token) => {
     try {
-      const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/contact/my-messages', {
+      const response = await axios.get(`${API_BASE_URL}/api/contact/my-messages`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setUserMessages(response.data);
@@ -50,7 +51,7 @@ const Contact = () => {
       const token = localStorage.getItem('token');
       const config = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 
-      await axios.post('http://${import.meta.env.VITE_API_URL}/api/contact', formData, config);
+      await axios.post(`${API_BASE_URL}/api/contact`, formData, config);
 
       setSuccess('Thank you for your message! We will get back to you soon.');
       setFormData({ name: '', email: '', phone: '', message: '' });

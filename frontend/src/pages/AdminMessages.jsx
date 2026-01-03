@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import '../styles/admin.css';
 
 const AdminMessages = () => {
@@ -16,7 +17,7 @@ const AdminMessages = () => {
     const fetchMessages = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/contact/admin', {
+            const response = await axios.get(`${API_BASE_URL}/api/contact/messages`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(response.data);
@@ -38,7 +39,7 @@ const AdminMessages = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                `http://${import.meta.env.VITE_API_URL}/api/contact/admin/${id}/reply`,
+                `${API_BASE_URL}/api/contact/admin/${id}/reply`,
                 { reply: replyContent },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

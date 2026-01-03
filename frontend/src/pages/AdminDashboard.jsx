@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import '../styles/admin.css';
 
 const AdminDashboard = () => {
@@ -15,11 +17,10 @@ const AdminDashboard = () => {
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const [regsRes, timeRes] = await Promise.all([
-        axios.get('http://${import.meta.env.VITE_API_URL}/api/admin/registrations', {
-          headers: { Authorization: `Bearer ${token}` }
-        }),
-        axios.get('http://${import.meta.env.VITE_API_URL}/api/registrations/timetables/all')
+      const [usersRes, messagesRes, schedulesRes] = await Promise.all([
+        axios.get(`${API_BASE_URL}/api/admin/users`, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`${API_BASE_URL}/api/contact/messages`, { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get(`${API_BASE_URL}/api/schedules?isActive=true`, { headers: { Authorization: `Bearer ${token}` } })
       ]);
 
       setRegistrations(regsRes.data);
@@ -41,7 +42,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.patch(
-        `http://${import.meta.env.VITE_API_URL}/api/admin/registrations/${registrationId}/approve`,
+        `${API_BASE_URL}/api/admin/registrations/${registrationId}/approve`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -68,7 +69,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.patch(
-        `http://${import.meta.env.VITE_API_URL}/api/admin/registrations/${registrationId}/reject`,
+        `${API_BASE_URL}/api/admin/registrations/${registrationId}/reject`,
         { reason },
         { headers: { Authorization: `Bearer ${token}` } }
       );

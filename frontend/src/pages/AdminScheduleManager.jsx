@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 const AdminScheduleManager = () => {
   const [schedules, setSchedules] = useState([]);
@@ -25,7 +26,7 @@ const AdminScheduleManager = () => {
 
   const fetchSchedules = useCallback(async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/schedules`, {
+      const response = await axios.get(`${API_BASE_URL}/api/schedules`, {
         headers: { Authorization: 'Bearer ' + token }
       });
       setSchedules(response.data);
@@ -95,7 +96,7 @@ const AdminScheduleManager = () => {
       if (editingId) {
         // Update existing schedule
         await axios.patch(
-          `${import.meta.env.VITE_API_URL}/api/schedules/${editingId}`,
+          `${API_BASE_URL}/api/schedules/${editingId}`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -103,7 +104,7 @@ const AdminScheduleManager = () => {
       } else {
         // Create new schedule
         await axios.post(
-          `${import.meta.env.VITE_API_URL}/api/schedules`,
+          `${API_BASE_URL}/api/schedules`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -138,7 +139,7 @@ const AdminScheduleManager = () => {
 
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/api/schedules/${scheduleId}`,
+        `${API_BASE_URL}/api/schedules/${scheduleId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSuccess('Schedule deleted successfully');

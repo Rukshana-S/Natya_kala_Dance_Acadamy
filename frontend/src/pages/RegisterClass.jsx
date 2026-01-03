@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 
 const RegisterClass = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const RegisterClass = () => {
   useEffect(() => {
     const fetchTimetables = async () => {
       try {
-        const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/registrations/timetables/all');
+        const response = await axios.get(`${API_BASE_URL}/api/registrations/timetables/all`);
         setTimetablesData(response.data);
       } catch (error) {
         console.error('Error fetching timetables:', error);
@@ -84,7 +85,7 @@ const RegisterClass = () => {
     setIsSubmitting(true);
 
     try {
-      await axios.post('http://${import.meta.env.VITE_API_URL}/api/registrations', formData);
+      await axios.post(`${API_BASE_URL}/api/registrations`, formData);
       setSubmitMessage('Registration submitted successfully! We will contact you soon.');
       setFormData({
         fullName: '',

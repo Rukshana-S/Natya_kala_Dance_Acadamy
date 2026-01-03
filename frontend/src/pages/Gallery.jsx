@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { API_BASE_URL } from '../config/api';
+
 const Gallery = () => {
     const [items, setItems] = useState([]);
     const [filteredItems, setFilteredItems] = useState([]);
@@ -38,7 +40,7 @@ const Gallery = () => {
                 headers['Authorization'] = `Bearer ${token}`;
             }
 
-            const response = await fetch('http://${import.meta.env.VITE_API_URL}/api/gallery', {
+            const response = await fetch(`${API_BASE_URL}/api/gallery`, {
                 headers
             });
 
@@ -66,21 +68,21 @@ const Gallery = () => {
     };
 
     return (
-        <div className="page-container animate-fade-in">
+        <div className="page-container animate-fade-in" >
             {/* Hero Section */}
-            <div className="page-hero" style={{
+            < div className="page-hero" style={{
                 background: 'linear-gradient(135deg, #8B1538 0%, #B8860B 100%)',
                 padding: '6rem 0 3rem',
                 textAlign: 'center',
                 color: 'white'
-            }}>
+            }} >
                 <div className="container">
                     <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem', color: '#D4AF37' }}>Gallery</h1>
                     <p style={{ fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', color: '#F4E4BC' }}>
                         Moments captured in time - witnessing the divine art of Bharatanatyam through our journey.
                     </p>
                 </div>
-            </div>
+            </div >
 
             <div className="container section">
                 {/* Filters */}
@@ -301,7 +303,7 @@ const Gallery = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </div >
     );
 };
 

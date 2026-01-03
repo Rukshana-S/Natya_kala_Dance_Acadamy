@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import '../styles/admin.css';
 
 const AdminRevenue = () => {
@@ -11,7 +12,7 @@ const AdminRevenue = () => {
         const fetchRevenue = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/admin/revenue', {
+                const response = await axios.get(`${API_BASE_URL}/api/admin/revenue`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setRevenue(response.data);
