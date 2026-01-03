@@ -1,4 +1,5 @@
 ﻿import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_BASE_URL } from '../config/api';
 import '../styles/schedule.css';
@@ -135,7 +136,7 @@ export default function Schedule() {
 
       <div className="cta-section">
         <p>Ready to join our dance academy?</p>
-        <a href="/register" className="btn-register">Register Now</a>
+        <Link to="/register" className="btn-register">Register Now</Link>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ScrollReveal from '../components/ScrollReveal';
 
 const About = () => {
@@ -156,9 +157,9 @@ const About = () => {
                 Become part of our family and experience the transformative power of Bharatanatyam.
                 Your journey into this divine art form begins with a single step.
               </p>
-              <a href="/register" className="btn-primary glow-pulse">
+              <Link to="/register" className="btn-primary glow-pulse">
                 Start Your Training
-              </a>
+              </Link>
             </ScrollReveal>
           </div>
         </section>
