@@ -71,6 +71,9 @@ app.get('/', (req, res) => {
   });
 });
 
+// Favicon handler
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({

@@ -3,6 +3,18 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
+// GET /api/auth - Auth API status
+router.get('/', (req, res) => {
+    res.json({
+        message: 'Auth API',
+        endpoints: {
+            login: '/api/auth/login',
+            signup: '/api/auth/signup',
+            forgotPassword: '/api/auth/forgot-password'
+        }
+    });
+});
+
 // POST /api/auth/signup - Student signup
 router.post('/signup', authController.signup);
 

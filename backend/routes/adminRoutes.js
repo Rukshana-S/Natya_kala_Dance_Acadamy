@@ -5,6 +5,19 @@ const adminMiddleware = require('../middleware/adminMiddleware');
 
 const router = express.Router();
 
+// GET /api/admin - Admin API status
+router.get('/', (req, res) => {
+    res.json({
+        message: 'Admin API',
+        endpoints: {
+            dashboardStats: '/api/admin/dashboard-stats',
+            registrations: '/api/admin/registrations',
+            statistics: '/api/admin/statistics',
+            revenue: '/api/admin/revenue'
+        }
+    });
+});
+
 // Apply auth and admin middleware to all routes
 router.use(authMiddleware);
 router.use(adminMiddleware);
