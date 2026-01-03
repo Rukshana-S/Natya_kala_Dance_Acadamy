@@ -56,8 +56,8 @@ A stunning full-stack MERN application for managing a traditional Bharatanatyam 
 
 4. **Access the Application**
    - Frontend: http://localhost:5173
-   - Backend API: http://localhost:5000
-   - API Health: http://localhost:5000/api/health
+   - Backend API: http://${import.meta.env.VITE_API_URL}
+   - API Health: http://${import.meta.env.VITE_API_URL}/api/health
 
 ## 🔐 Default Admin Credentials
 

@@ -16,10 +16,10 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('token');
       const [regsRes, timeRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/admin/registrations', {
+        axios.get('http://${import.meta.env.VITE_API_URL}/api/admin/registrations', {
           headers: { Authorization: `Bearer ${token}` }
         }),
-        axios.get('http://localhost:5000/api/registrations/timetables/all')
+        axios.get('http://${import.meta.env.VITE_API_URL}/api/registrations/timetables/all')
       ]);
 
       setRegistrations(regsRes.data);
@@ -41,7 +41,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.patch(
-        `http://localhost:5000/api/admin/registrations/${registrationId}/approve`,
+        `http://${import.meta.env.VITE_API_URL}/api/admin/registrations/${registrationId}/approve`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -68,7 +68,7 @@ const AdminDashboard = () => {
     try {
       const token = localStorage.getItem('token');
       await axios.patch(
-        `http://localhost:5000/api/admin/registrations/${registrationId}/reject`,
+        `http://${import.meta.env.VITE_API_URL}/api/admin/registrations/${registrationId}/reject`,
         { reason },
         { headers: { Authorization: `Bearer ${token}` } }
       );

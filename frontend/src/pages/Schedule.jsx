@@ -41,7 +41,7 @@ export default function Schedule() {
   useEffect(() => {
     const fetchTimetables = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/registrations/timetables/all');
+        const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/registrations/timetables/all');
         setTimetables(response.data);
         setLoading(false);
       } catch (err) {

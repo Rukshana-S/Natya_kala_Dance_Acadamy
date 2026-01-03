@@ -19,7 +19,7 @@ const AdminStatistics = () => {
         const loadStatistics = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:5000/api/admin/statistics', {
+                const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/admin/statistics', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setStats(response.data);

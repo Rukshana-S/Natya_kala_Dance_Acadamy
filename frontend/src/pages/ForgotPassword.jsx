@@ -17,7 +17,7 @@ const ForgotPassword = () => {
         setResetToken('');
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/forgot-password', { email });
+            const response = await axios.post('http://${import.meta.env.VITE_API_URL}/api/auth/forgot-password', { email });
             setMessage(response.data.message);
             // For testing convenience
             if (response.data.devToken) {

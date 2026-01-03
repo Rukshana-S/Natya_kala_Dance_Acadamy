@@ -76,7 +76,7 @@ const AdminGallery = () => {
     const fetchItems = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:5000/api/gallery', {
+            const response = await fetch('http://${import.meta.env.VITE_API_URL}/api/gallery', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await response.json();
@@ -105,7 +105,7 @@ const AdminGallery = () => {
             let response;
             if (editId) {
                 // Update existing item
-                response = await fetch(`http://localhost:5000/api/gallery/${editId}`, {
+                response = await fetch(`http://${import.meta.env.VITE_API_URL}/api/gallery/${editId}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ const AdminGallery = () => {
                     submitData.append('media', formData.media);
                 }
 
-                response = await fetch('http://localhost:5000/api/gallery', {
+                response = await fetch('http://${import.meta.env.VITE_API_URL}/api/gallery', {
                     method: 'POST',
                     headers: { 'Authorization': `Bearer ${token}` },
                     body: submitData
@@ -176,7 +176,7 @@ const AdminGallery = () => {
         if (!window.confirm('Are you sure you want to delete this item?')) return;
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:5000/api/gallery/${id}`, {
+            const response = await fetch(`http://${import.meta.env.VITE_API_URL}/api/gallery/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

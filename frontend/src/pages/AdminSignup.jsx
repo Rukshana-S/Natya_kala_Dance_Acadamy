@@ -33,7 +33,7 @@ const AdminSignup = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/admin-signup', {
+      await axios.post('http://${import.meta.env.VITE_API_URL}/api/auth/admin-signup', {
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password,
@@ -49,7 +49,7 @@ const AdminSignup = () => {
   };
 
   return (
-    <div style={{ 
+    <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/auth.jpg")',
       backgroundSize: 'cover',
@@ -84,16 +84,16 @@ const AdminSignup = () => {
           }}>
             👑
           </div>
-          
-          <h1 style={{ 
-            color: 'var(--deep-maroon)', 
+
+          <h1 style={{
+            color: 'var(--deep-maroon)',
             marginBottom: '0.5rem',
             fontSize: '2rem'
           }}>
             Admin Registration
           </h1>
-          <p style={{ 
-            color: 'var(--dark-brown)', 
+          <p style={{
+            color: 'var(--dark-brown)',
             marginBottom: '2rem',
             fontSize: '1rem'
           }}>
@@ -196,7 +196,7 @@ const AdminSignup = () => {
             </button>
           </form>
 
-          <Link 
+          <Link
             to="/admin/login"
             style={{
               color: 'var(--primary-maroon)',

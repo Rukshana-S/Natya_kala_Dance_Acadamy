@@ -18,7 +18,7 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const response = await axios.post('http://${import.meta.env.VITE_API_URL}/api/auth/login', formData);
 
       if (response.data.user.role !== 'admin') {
         setError('Access denied. Admin privileges required.');

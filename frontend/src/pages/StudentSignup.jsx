@@ -32,7 +32,7 @@ const StudentSignup = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/auth/signup', {
+      await axios.post('http://${import.meta.env.VITE_API_URL}/api/auth/signup', {
         fullName: formData.fullName,
         email: formData.email,
         password: formData.password
@@ -47,7 +47,7 @@ const StudentSignup = () => {
   };
 
   return (
-    <div style={{ 
+    <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url("/auth.jpg")',
       backgroundSize: 'cover',
@@ -67,15 +67,15 @@ const StudentSignup = () => {
           boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
           textAlign: 'center'
         }}>
-          <h1 style={{ 
-            color: 'var(--deep-maroon)', 
+          <h1 style={{
+            color: 'var(--deep-maroon)',
             marginBottom: '0.5rem',
             fontSize: '2.5rem'
           }}>
             Join Us
           </h1>
-          <p style={{ 
-            color: 'var(--dark-brown)', 
+          <p style={{
+            color: 'var(--dark-brown)',
             marginBottom: '2rem',
             fontSize: '1.1rem',
             fontStyle: 'italic'
@@ -168,10 +168,10 @@ const StudentSignup = () => {
 
           <p style={{ color: 'var(--dark-brown)', fontSize: '0.9rem' }}>
             Already have an account?{' '}
-            <Link 
-              to="/login" 
-              style={{ 
-                color: 'var(--primary-maroon)', 
+            <Link
+              to="/login"
+              style={{
+                color: 'var(--primary-maroon)',
                 textDecoration: 'none',
                 fontWeight: '600'
               }}

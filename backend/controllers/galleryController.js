@@ -7,11 +7,9 @@ exports.createGalleryItem = async (req, res) => {
         // Handle file upload
         let mediaUrl = '';
         if (req.file) {
-            // Construct full URL (assuming server runs on same host/port config as typical dev)
-            // Ideally use env var for BASE_URL
-            const protocol = req.protocol;
-            const host = req.get('host');
-            mediaUrl = `${protocol}://${host}/uploads/${req.file.filename}`;
+            // Construct full URL using BASE_URL env var or fallback to request headers
+            const baseUrl = process.env.BASE_URL || `${req.protocol}://${req.get('host')}`;
+            mediaUrl = `${baseUrl}/uploads/${req.file.filename}`;
         } else if (req.body.mediaUrl) {
             // Fallback if they still send a URL string (though UI won't)
             mediaUrl = req.body.mediaUrl;

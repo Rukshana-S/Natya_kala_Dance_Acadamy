@@ -16,7 +16,7 @@ const AdminMessages = () => {
     const fetchMessages = async () => {
         try {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:5000/api/contact/admin', {
+            const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/contact/admin', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(response.data);
@@ -38,7 +38,7 @@ const AdminMessages = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                `http://localhost:5000/api/contact/admin/${id}/reply`,
+                `http://${import.meta.env.VITE_API_URL}/api/contact/admin/${id}/reply`,
                 { reply: replyContent },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

@@ -23,7 +23,7 @@ const RegisterClass = () => {
   useEffect(() => {
     const fetchTimetables = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/registrations/timetables/all');
+        const response = await axios.get('http://${import.meta.env.VITE_API_URL}/api/registrations/timetables/all');
         setTimetablesData(response.data);
       } catch (error) {
         console.error('Error fetching timetables:', error);
@@ -84,7 +84,7 @@ const RegisterClass = () => {
     setIsSubmitting(true);
 
     try {
-      await axios.post('http://localhost:5000/api/registrations', formData);
+      await axios.post('http://${import.meta.env.VITE_API_URL}/api/registrations', formData);
       setSubmitMessage('Registration submitted successfully! We will contact you soon.');
       setFormData({
         fullName: '',

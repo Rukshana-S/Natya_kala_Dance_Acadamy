@@ -25,7 +25,7 @@ const AdminScheduleManager = () => {
 
   const fetchSchedules = useCallback(async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/schedules', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/schedules`, {
         headers: { Authorization: 'Bearer ' + token }
       });
       setSchedules(response.data);
@@ -95,7 +95,7 @@ const AdminScheduleManager = () => {
       if (editingId) {
         // Update existing schedule
         await axios.patch(
-          `http://localhost:5000/api/schedules/${editingId}`,
+          `${import.meta.env.VITE_API_URL}/api/schedules/${editingId}`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -103,7 +103,7 @@ const AdminScheduleManager = () => {
       } else {
         // Create new schedule
         await axios.post(
-          'http://localhost:5000/api/schedules',
+          `${import.meta.env.VITE_API_URL}/api/schedules`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -138,7 +138,7 @@ const AdminScheduleManager = () => {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/schedules/${scheduleId}`,
+        `${import.meta.env.VITE_API_URL}/api/schedules/${scheduleId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setSuccess('Schedule deleted successfully');
